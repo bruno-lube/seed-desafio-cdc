@@ -1,0 +1,13 @@
+@BookStore.Api_HostAddress = http://localhost:32772
+
+POST {{BookStore.Api_HostAddress}}/api/authors
+Content-Type: application/json
+
+  {
+    "name": "string",
+    "email": "userexample.com",
+    "description": "string"
+  }
+
+
+###
