@@ -2,6 +2,7 @@
 using BookStore.Api.Repository.Context;
 using BookStore.Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.Api.Controllers
 {
@@ -23,6 +24,7 @@ namespace BookStore.Api.Controllers
         {
             Author author = request.ToAuthor();
             await _dbContext.Authors.AddAsync(author);
+            await _dbContext.SaveChangesAsync();
             return Ok(author);
         }
     }
