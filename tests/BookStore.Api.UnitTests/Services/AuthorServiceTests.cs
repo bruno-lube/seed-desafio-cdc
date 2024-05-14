@@ -7,15 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
-namespace BookStore.Api.UnitTests
+namespace BookStore.Api.UnitTests.Services
 {
-    public class UnitTest1
+    public class AuthorServiceTests
     {
         private readonly BookStoreDbContext _context;
         private readonly AuthorService _authorService;
         private readonly AuthorsController _controller;
 
-        public UnitTest1()
+        public AuthorServiceTests()
         {
             var dbContextOptions = new DbContextOptionsBuilder<BookStoreDbContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
@@ -39,7 +39,7 @@ namespace BookStore.Api.UnitTests
         {
             var existingAuthor = new CreateAuthorRequest("John Doe", "john@doe.com", "Description for John");
             var createResult = await _authorService.CreateAuthor(existingAuthor);
-            
+
             Assert.False(createResult.IsSuccess);
             Assert.Contains("Email", createResult.Errors.Keys);
             Assert.Contains("The email address is already in use.", createResult.Errors["Email"]);
@@ -51,7 +51,7 @@ namespace BookStore.Api.UnitTests
         {
             var newAuthor = new CreateAuthorRequest("Joseph Doe", "joseph@doe.com", "Description for Joseph");
             var createResult = await _authorService.CreateAuthor(newAuthor);
-            
+
             Assert.True(createResult.IsSuccess);
         }
     }
