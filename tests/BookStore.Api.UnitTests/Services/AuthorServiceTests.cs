@@ -35,7 +35,7 @@ namespace BookStore.Api.UnitTests.Services
 
         [Fact(DisplayName = "Should not create Author when email address already exists")]
         [Trait("Services", "AuthorService")]
-        public async void Test1()
+        public async Task Test1()
         {
             var existingAuthor = new CreateAuthorRequest("John Doe", "john@doe.com", "Description for John");
             var createResult = await _authorService.CreateAuthor(existingAuthor);
@@ -47,7 +47,7 @@ namespace BookStore.Api.UnitTests.Services
 
         [Fact(DisplayName = "Should create Author when email address does not exist in the database")]
         [Trait("Services", "AuthorService")]
-        public async void Test2()
+        public async Task Test2()
         {
             var newAuthor = new CreateAuthorRequest("Joseph Doe", "joseph@doe.com", "Description for Joseph");
             var createResult = await _authorService.CreateAuthor(newAuthor);
