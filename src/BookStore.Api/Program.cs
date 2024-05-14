@@ -1,4 +1,6 @@
 using BookStore.Api.Repository.Context;
+using BookStore.Api.Services;
+using BookStore.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,6 +34,8 @@ builder.Services.AddDbContext<BookStoreDbContext>(options =>
 {
     options.UseInMemoryDatabase("BookStore");
 });
+
+builder.Services.AddScoped<IAuthorService, AuthorService>();
 
 var app = builder.Build();
 

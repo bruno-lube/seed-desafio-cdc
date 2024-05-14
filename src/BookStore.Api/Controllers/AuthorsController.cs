@@ -1,8 +1,7 @@
-﻿using BookStore.Api.Domain.Models;
-using BookStore.Api.Repository.Context;
+﻿using BookStore.Api.Extensions;
+using BookStore.Api.Services.Interfaces;
 using BookStore.Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.Api.Controllers
 {
@@ -10,11 +9,11 @@ namespace BookStore.Api.Controllers
     [ApiController]
     public class AuthorsController : ControllerBase
     {
-        private readonly BookStoreDbContext _dbContext;
+        private readonly IAuthorService _authorService;
 
-        public AuthorsController(BookStoreDbContext dbContext)
+        public AuthorsController(IAuthorService authorService)
         {
-            _dbContext = dbContext;
+            _authorService = authorService;
         }
 
         [HttpPost]
@@ -22,10 +21,10 @@ namespace BookStore.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateAuthor([FromBody] CreateAuthorRequest request)
         {
-            Author author = request.ToAuthor();
-            await _dbContext.Authors.AddAsync(author);
-            await _dbContext.SaveChangesAsync();
-            return Ok(author);
+            var createAuthorResponse = await _authorService.CreateAuthor(request);
+            return createAuthorResponse.IsSuccess 
+                ? Ok(createAuthorResponse.Data) 
+                : this.ToProblemDetails(createAuthorResponse.Errors);
         }
     }
 }
