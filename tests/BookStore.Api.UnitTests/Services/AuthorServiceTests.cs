@@ -1,11 +1,8 @@
-using BookStore.Api.Controllers;
 using BookStore.Api.Domain.Models;
 using BookStore.Api.Repository.Context;
 using BookStore.Api.Services;
 using BookStore.Api.ViewModels;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
 namespace BookStore.Api.UnitTests.Services
 {
@@ -13,7 +10,6 @@ namespace BookStore.Api.UnitTests.Services
     {
         private readonly BookStoreDbContext _context;
         private readonly AuthorService _authorService;
-        private readonly AuthorsController _controller;
 
         public AuthorServiceTests()
         {
@@ -23,7 +19,6 @@ namespace BookStore.Api.UnitTests.Services
             _context = new BookStoreDbContext(dbContextOptions);
             SeedAuthors();
             _authorService = new AuthorService(_context);
-            _controller = new AuthorsController(_authorService);
         }
 
         private void SeedAuthors()
